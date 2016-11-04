@@ -2,17 +2,39 @@
 <html>
 	<head>
 		<meta charset="utf-8"/>
-		<title>WebGL Example</title>
+		<title>Play Pacman</title>
 		
 		<script id="vertex-shader" type="x-shader/x-vertex">
 			attribute vec4 vPosition;
 			attribute vec4 vColor;
 
 			varying vec4 fColor;
+			
+			void move(float px, float py)
+			{
+			    mat4 lnewPos = mat4(1.0, 0.0, 0.0, px,
+				                                 0.0, 1.0, 0.0, py,
+										         0.0, 0.0, 1.0, 0.0,
+										         0.0, 0.0, 0.0, 1.0);
+												 
+				gl_Position = lnewPos*vPosition;
+			}
+			
+			void rotate(float pDeg)
+			{
+			     mat4 lnewPos = mat4(cos(pDeg), -sin(pDeg), 0.0, 0.0,
+				                                 sin(pDeg), cos(pDeg), 0.0, 0.0,
+										         0.0, 0.0, 1.0, 0.0,
+										         0.0, 0.0, 0.0, 1.0);
+				
+                 gl_Position = lnewPos*gl_Position;				
+			}
 			void main()
 			{
 				fColor = vColor;
 				gl_Position = vPosition;
+				//move(0.5,0.5);
+				//rotate(90.0);
 			}
 		</script>
 		<script id="fragment-shader" type="x-shader/x-fragment">

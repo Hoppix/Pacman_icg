@@ -12,9 +12,9 @@ window.onload = function init()
 	var gf32aVertices;	
 	var gf32aColors;
 	var gobaHelpMe;
-	var gintNumberOfVertices = parseInt(prompt("Number of Vertices pls"));
+	var gintNumberOfVertices = 80;
 	
-	gobaHelpMe = drawPacman(1, gintNumberOfVertices, 45);
+	gobaHelpMe = drawPacman(3, gintNumberOfVertices, 45);
 	gf32aVertices = gobaHelpMe[0];
 	gf32aColors = gobaHelpMe[1];
 
@@ -65,7 +65,7 @@ function drawPacman(radius, pintNumberOfVertices, pintMouthAngle)
 	gf32aVertices = new Float32Array((pintNumberOfVertices+2)*2);
 	gf32aColors = new Float32Array((pintNumberOfVertices+4)*4);
 
-	var triangleLength = radius;
+	var triangleLength = radius/10;
 
 	//mittleren Punkt definieren.
 	gf32aVertices[0] = 0;
