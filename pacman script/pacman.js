@@ -1,6 +1,5 @@
 var gl;
 
-
 window.onload = function init()
 {
 	// Get canvas and setup WebGL
@@ -10,16 +9,19 @@ window.onload = function init()
 	if (!gl) { alert("WebGL isn't available"); }
 
 	// Specify position and color of the vertices
+	var gf32aVertices;	
+	var gf32aColors;
+	var gobaHelpMe;
+	var gintNumberOfVertices = parseInt(prompt("Number of Vertices pls"));
 	
-	var vertices = new Float32Array([]);	
-    var colors = new Float32Array([]);
-    drawPacman(3, 8, 45);
+	gobaHelpMe = drawPacman(1, gintNumberOfVertices, 45);
+	gf32aVertices = gobaHelpMe[0];
+	gf32aColors = gobaHelpMe[1];
+
 	// Configure viewport
 
-	console.log(colors)
 	gl.viewport(0,0,canvas.width,canvas.height);
-	gl.clearColor(1.0,1.0,1.0,1.0);
-	
+	gl.clearColor(0.0,0.0,0.0,0.0);
 
 	// Init shader program and bind it
 
@@ -30,7 +32,7 @@ window.onload = function init()
 
 	var posVBO = gl.createBuffer();
 	gl.bindBuffer(gl.ARRAY_BUFFER, posVBO);
-	gl.bufferData(gl.ARRAY_BUFFER, vertices, gl.STATIC_DRAW);
+	gl.bufferData(gl.ARRAY_BUFFER, gf32aVertices, gl.STATIC_DRAW);
 
 	var vPosition = gl.getAttribLocation(program, "vPosition");
 	gl.vertexAttribPointer(vPosition, 2, gl.FLOAT, false, 0, 0);
@@ -40,48 +42,65 @@ window.onload = function init()
 	
 	var colorVBO = gl.createBuffer();
 	gl.bindBuffer(gl.ARRAY_BUFFER, colorVBO);
-	gl.bufferData(gl.ARRAY_BUFFER, colors, gl.STATIC_DRAW);
+	gl.bufferData(gl.ARRAY_BUFFER, gf32aColors, gl.STATIC_DRAW);
 	
 	var vColor = gl.getAttribLocation(program, "vColor");
 	gl.vertexAttribPointer(vColor, 4, gl.FLOAT, false, 0, 0);
 	gl.enableVertexAttribArray(vColor);
-
-	gl.clear(gl.COLOR_BUFFER_BIT);
-	gl.drawArrays(gl.TRIANGLES, 0, 10); //TODO in der funktion
+	
+	render(gobaHelpMe[2]); //auf Index 2 von HelpMe steht die 
+	
 };
 
+function render(pintNumberOfVertices)
+{
+	gl.clear(gl.COLOR_BUFFER_BIT);
+	gl.drawArrays(gl.TRIANGLE_FAN, 0, pintNumberOfVertices+1);
+}
 
-function drawPacman(radius, numberOfVertices, angleMouth)
-{		
-	var triangleLength = radius/10;
-	alert("hallo1")
+//berechnet die für das Polygon benötigten Vertices
+function drawPacman(radius, pintNumberOfVertices, pintMouthAngle)
+{
+
+	gf32aVertices = new Float32Array((pintNumberOfVertices+2)*2);
+	gf32aColors = new Float32Array((pintNumberOfVertices+4)*4);
+
+	var triangleLength = radius;
+
 	//mittleren Punkt definieren.
-	vertices = [0, 0];
+	gf32aVertices[0] = 0;
+	gf32aVertices[1] = 0;
 	//farben vom center
-	color = [1,1,0,1];
-	alert("hallo2")
-	alert(color)
-	for(var i = 1; i<=numberOfVertices; i++ )
+	gf32aColors[0] = 1;
+	gf32aColors[1] = 1;
+	gf32aColors[2] = 0;
+	gf32aColors[3] = 1;
+	
+	//berechne den i shift
+	var lintShiftI = Math.PI/2 + Math.PI*(pintMouthAngle/(360));
+	var lintEnd = Math.round(pintNumberOfVertices - (pintMouthAngle/360) * pintNumberOfVertices)+1;
+
+	
+	for(var i = 0; i<=lintEnd; i++ )
 	{
 		
-		alert("forBegin");
-        vertices[2*i] = sin(
-        (3.145/numberOfVertices)*i
-        )*triangleLength
-        ;
-  
-        alert("bla")
-        alert(vertices);
-        vertices.push(cos(
-       (3.145/numberOfVertices)*i
-       )*triangleLength
-       );
-       color.push(1);
-       color.push(1);
-       color.push(0);
-       color.push(1);
-	}					
-       alert("hallo3")	
+		gf32aVertices[2*i+2] = (Math.sin((2*Math.PI/pintNumberOfVertices)*i+lintShiftI)*triangleLength);
+		gf32aVertices[2*i+3] = (Math.cos((2*Math.PI/pintNumberOfVertices)*i+lintShiftI)*triangleLength);
+		
+		gf32aColors[4*i] = 1;
+		gf32aColors[4*i+1] = 1;
+		gf32aColors[4*i+2] = 0;
+		gf32aColors[4*i+3] = 1;
+		
+	}
+
+	lobaHelpMe = [gf32aVertices, gf32aColors, lintEnd];
+	return lobaHelpMe;
+	
+//berechnet wieviele Dreiecke beim erstellen des Kreises ausgelassen werden müssen um den Mund dar zu stellen.
+//Der Mund soll bei Pi/2 dargestellt werden
+//zentrum des Mundes bei Pi/2, darüber und darunter MouthAngle/2 winkel auslassen
+	
 }
 
 
