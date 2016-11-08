@@ -7,8 +7,8 @@
 		<script id="vertex-shader" type="x-shader/x-vertex">
 			attribute vec4 vPosition;
 			attribute vec4 vColor;
-
 			varying vec4 fColor;
+			uniform mat4 transformMatrix;
 			
 			void move(float px, float py)
 			{
@@ -17,11 +17,12 @@
 										         0.0, 0.0, 1.0, 0.0,
 										         0.0, 0.0, 0.0, 1.0);
 												 
-				gl_Position = lnewPos*vPosition;
+				gl_Position = lnewPos*gl_Position;
 			}
 			
 			void rotate(float pDeg)
 			{
+			
 			     mat4 lnewPos = mat4(cos(pDeg), -sin(pDeg), 0.0, 0.0,
 				                                 sin(pDeg), cos(pDeg), 0.0, 0.0,
 										         0.0, 0.0, 1.0, 0.0,
@@ -29,12 +30,23 @@
 				
                  gl_Position = lnewPos*gl_Position;				
 			}
+			
+			void scale(float px,float py)
+			{
+			     mat4 lnewPos = mat4(px, 0.0, 0.0, 0.0,
+				                                 0.0, py, 0.0, 0.0,
+										         0.0, 0.0, 1.0, 0.0,
+										         0.0, 0.0, 0.0, 1.0);
+			    
+				gl_Position = lnewPos*gl_Position; 
+			}
 			void main()
 			{
 				fColor = vColor;
 				gl_Position = vPosition;
-				//move(0.5,0.5);
-				//rotate(90.0);
+				move(0.0,0.0);
+				rotate(0.0);
+				scale(0.0,0.0);
 			}
 		</script>
 		<script id="fragment-shader" type="x-shader/x-fragment">
@@ -55,7 +67,7 @@
 		</script>
 	</head>
 	<body>
-		<h1>Pacman Kopf test</h1>
+		<h1>Pacman Kopf test v1.4</h1>
 
 		<canvas id="gl-canvas" width="512" height="512">
 			If you see this, your browser doesn't support WebGL.

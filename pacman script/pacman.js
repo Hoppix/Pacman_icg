@@ -17,6 +17,9 @@ window.onload = function init()
 	gobaHelpMe = drawPacman(3, gintNumberOfVertices, 45);
 	gf32aVertices = gobaHelpMe[0];
 	gf32aColors = gobaHelpMe[1];
+	alert("lol1");
+	setTransformMatrix();
+	alert("lol2");
 
 	// Configure viewport
 
@@ -47,6 +50,7 @@ window.onload = function init()
 	var vColor = gl.getAttribLocation(program, "vColor");
 	gl.vertexAttribPointer(vColor, 4, gl.FLOAT, false, 0, 0);
 	gl.enableVertexAttribArray(vColor);
+	
 	
 	render(gobaHelpMe[2]); //auf Index 2 von HelpMe steht die 
 	
@@ -100,6 +104,20 @@ function drawPacman(radius, pintNumberOfVertices, pintMouthAngle)
 //berechnet wieviele Dreiecke beim erstellen des Kreises ausgelassen werden müssen um den Mund dar zu stellen.
 //Der Mund soll bei Pi/2 dargestellt werden
 //zentrum des Mundes bei Pi/2, darüber und darunter MouthAngle/2 winkel auslassen
+	
+}
+
+function setTransformMatrix()
+{
+	transformMatrix = [1.0, 0.0, 0.0, 0.0,
+				                0.0, 1.0, 0.0, 0.0,
+								0.0, 0.0, 1.0, 0.0,
+								0.0, 0.0, 0.0, 1.0];
+    alert("matrix create");
+	var matrixLoc =  gl.getUniformLocation( program, "transformMatrix");
+	alert("loc set");
+	gl.uniformMatrix4fv(matrixLoc, false, transformMatrix );
+	alert("uniform set");
 	
 }
 
