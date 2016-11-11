@@ -13,13 +13,17 @@ window.onload = function init()
 	var gf32aColors;
 	var gobaHelpMe;
 	var gintNumberOfVertices = 80;
+	//Variablen für Position und Orientierung(Aufgabe 2) in Rad.
+	var gLocX = 0.0;
+	var gLocY = 0.0;
+	var gAlign = 0.0;
 	
 	gobaHelpMe = drawPacman(3, gintNumberOfVertices, 45);
 	gf32aVertices = gobaHelpMe[0];
 	gf32aColors = gobaHelpMe[1];
-	alert("lol1");
+	alert("pre setTransform")
 	setTransformMatrix();
-	alert("lol2");
+	alert("post setTransform");
 
 	// Configure viewport
 
@@ -109,20 +113,18 @@ function drawPacman(radius, pintNumberOfVertices, pintMouthAngle)
 
 function setTransformMatrix()
 {
-	transformMatrix = [1.0, 0.0, 0.0, 0.0,
-				                0.0, 1.0, 0.0, 0.0,
-								0.0, 0.0, 1.0, 0.0,
-								0.0, 0.0, 0.0, 1.0];
+	transformMatrix = [Math.cos(gAlign), -(Math.sin(gAlign)), 0.0, gLocX,
+				                Math.sin(gAlign), Math.cos(gAlign)    , 0.0, gLocY,
+								0.0                  , 0.0                        , 1.0,     0.0,
+								0.0                  , 0.0                        , 0.0,    1.0];
+								
     alert("matrix create");
-	var matrixLoc =  gl.getUniformLocation( program, "transformMatrix");
+	var matrixLoc =  gl.getUniformLocation(program, "transformMatrix");
 	alert("loc set");
 	gl.uniformMatrix4fv(matrixLoc, false, transformMatrix );
 	alert("uniform set");
-	
+	//Übergibt die Transformationsmatrix an den Vertex-Shader.
 }
-
-
-
 
 
 
