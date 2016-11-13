@@ -3,13 +3,13 @@ var gl;
 window.onload = function init()
 {
 	// Get canvas and setup WebGL
-	
+
 	var canvas = document.getElementById("gl-canvas");
 	gl = WebGLUtils.setupWebGL(canvas);
 	if (!gl) { alert("WebGL isn't available"); }
 
 	// Specify position and color of the vertices
-	var gf32aVertices;	
+	var gf32aVertices;
 	var gf32aColors;
 	var gobaHelpMe;
 	var gintNumberOfVertices = 80;
@@ -17,7 +17,7 @@ window.onload = function init()
 	var gLocX = 0.0;
 	var gLocY = 0.0;
 	var gAlign = 0.0;
-	
+
 	gobaHelpMe = drawPacman(3, gintNumberOfVertices, 45);
 	gf32aVertices = gobaHelpMe[0];
 	gf32aColors = gobaHelpMe[1];
@@ -34,7 +34,7 @@ window.onload = function init()
 
 	var program = initShaders(gl, "vertex-shader", "fragment-shader");
 	gl.useProgram(program);
-	
+
 	// Load positions into the GPU and associate shader variables
 
 	var posVBO = gl.createBuffer();
@@ -46,18 +46,18 @@ window.onload = function init()
 	gl.enableVertexAttribArray(vPosition);
 
 	// Load colors into the GPU and associate shader variables
-	
+
 	var colorVBO = gl.createBuffer();
 	gl.bindBuffer(gl.ARRAY_BUFFER, colorVBO);
 	gl.bufferData(gl.ARRAY_BUFFER, gf32aColors, gl.STATIC_DRAW);
-	
+
 	var vColor = gl.getAttribLocation(program, "vColor");
 	gl.vertexAttribPointer(vColor, 4, gl.FLOAT, false, 0, 0);
 	gl.enableVertexAttribArray(vColor);
-	
-	
-	render(gobaHelpMe[2]); //auf Index 2 von HelpMe steht die 
-	
+
+
+	render(gobaHelpMe[2]); //auf Index 2 von HelpMe steht die
+
 };
 
 function render(pintNumberOfVertices)
@@ -83,82 +83,46 @@ function drawPacman(radius, pintNumberOfVertices, pintMouthAngle)
 	gf32aColors[1] = 1;
 	gf32aColors[2] = 0;
 	gf32aColors[3] = 1;
-	
+
 	//berechne den i shift
 	var lintShiftI = Math.PI/2 + Math.PI*(pintMouthAngle/(360));
 	var lintEnd = Math.round(pintNumberOfVertices - (pintMouthAngle/360) * pintNumberOfVertices)+1;
 
-	
+
 	for(var i = 0; i<=lintEnd; i++ )
 	{
-		
+
 		gf32aVertices[2*i+2] = (Math.sin((2*Math.PI/pintNumberOfVertices)*i+lintShiftI)*triangleLength);
 		gf32aVertices[2*i+3] = (Math.cos((2*Math.PI/pintNumberOfVertices)*i+lintShiftI)*triangleLength);
-		
+
 		gf32aColors[4*i] = 1;
 		gf32aColors[4*i+1] = 1;
 		gf32aColors[4*i+2] = 0;
 		gf32aColors[4*i+3] = 1;
-		
+
 	}
 
 	lobaHelpMe = [gf32aVertices, gf32aColors, lintEnd];
 	return lobaHelpMe;
-	
+
 //berechnet wieviele Dreiecke beim erstellen des Kreises ausgelassen werden müssen um den Mund dar zu stellen.
 //Der Mund soll bei Pi/2 dargestellt werden
 //zentrum des Mundes bei Pi/2, darüber und darunter MouthAngle/2 winkel auslassen
-	
+
 }
 
 function setTransformMatrix()
 {
-	transformMatrix = [Math.cos(gAlign), -(Math.sin(gAlign)), 0.0, gLocX,
+	var transformMatrix = [Math.cos(gAlign), -(Math.sin(gAlign)), 0.0, gLocX,
 				                Math.sin(gAlign), Math.cos(gAlign)    , 0.0, gLocY,
 								0.0                  , 0.0                        , 1.0,     0.0,
 								0.0                  , 0.0                        , 0.0,    1.0];
-								
+
     alert("matrix create");
+		alert("test commit");
 	var matrixLoc =  gl.getUniformLocation(program, "transformMatrix");
 	alert("loc set");
 	gl.uniformMatrix4fv(matrixLoc, false, transformMatrix );
 	alert("uniform set");
 	//Übergibt die Transformationsmatrix an den Vertex-Shader.
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
