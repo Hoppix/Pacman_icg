@@ -39,16 +39,15 @@ window.onload = function init()
 	setVBO();
 	setTransformMatrix();
 	render();
-  requestAnimFrame(frameRender());
+  requestAnimFrame(frameRender);
   //auf Index 2 von HelpMe steht NumberofVertices+2 -aussparung
 };
 
 function frameRender()
 {
-	gAlign = gAlign+degreesToRadians(10);
 	setTransformMatrix();
 	render();
-	requestAnimFrame(frameRender());
+	requestAnimFrame(frameRender);
 }
 
 function render()
@@ -159,12 +158,12 @@ function eventHandling(e)
 
 function turnLeft()
 {
-	gAlign = gAlign + degreesToRadians(90);
+	gAlign = gAlign + degreesToRadians(1.0);
 }
 
 function turnRight()
 {
-	gAlign = gAlign - degreesToRadians(90);
+	gAlign = gAlign - degreesToRadians(1.0);
 }
 
 function moveFoward()
@@ -174,7 +173,7 @@ function moveFoward()
 	{
 			gLocX = gLocX + 0.2 * Math.sin(gAlign);
 	}
-	
+
 	If (!(gLocY + 0.2 * Math.cos(gAlign) > 1 || gLocY + 0.2 * Math.cos(gAlign) < -1))
 	{
 			gLocY = gLocY + 0.2 * Math.cos(gAlign);
