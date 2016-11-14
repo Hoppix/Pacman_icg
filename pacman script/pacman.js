@@ -21,9 +21,7 @@ window.onload = function init()
 	gobaHelpMe = drawPacman(3, gintNumberOfVertices, 45);
 	gf32aVertices = gobaHelpMe[0];
 	gf32aColors = gobaHelpMe[1];
-	alert("pre setTransform")
-	setTransformMatrix();
-	alert("post setTransform");
+
 
 	// Configure viewport
 
@@ -34,6 +32,9 @@ window.onload = function init()
 
 	var program = initShaders(gl, "vertex-shader", "fragment-shader");
 	gl.useProgram(program);
+	alert("pre setTransform")
+	setTransformMatrix(gAlign, gLocX, gLocY, program);
+	alert("post setTransform");
 
 	// Load positions into the GPU and associate shader variables
 
@@ -111,16 +112,16 @@ function drawPacman(radius, pintNumberOfVertices, pintMouthAngle)
 
 }
 
-function setTransformMatrix()
+function setTransformMatrix(pAlign, pLocX, pLocY, pProgram)
 {
-	var transformMatrix = [Math.cos(gAlign), -(Math.sin(gAlign)), 0.0, gLocX,
-				                Math.sin(gAlign), Math.cos(gAlign)    , 0.0, gLocY,
+	alert(pAlign);
+	var transformMatrix = [Math.cos(pAlign), -(Math.sin(pAlign)), 0.0, pLocX,
+				                Math.sin(pAlign), Math.cos(pAlign)    , 0.0, pLocY,
 								0.0                  , 0.0                        , 1.0,     0.0,
 								0.0                  , 0.0                        , 0.0,    1.0];
 
-    alert("matrix create");
-		alert("test commit");
-	var matrixLoc =  gl.getUniformLocation(program, "transformMatrix");
+  alert("matrix create");
+	var matrixLoc =  gl.getUniformLocation(pProgram, "transformMatrix");
 	alert("loc set");
 	gl.uniformMatrix4fv(matrixLoc, false, transformMatrix );
 	alert("uniform set");
