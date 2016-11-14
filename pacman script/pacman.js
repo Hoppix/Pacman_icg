@@ -32,9 +32,7 @@ window.onload = function init()
 
 	var program = initShaders(gl, "vertex-shader", "fragment-shader");
 	gl.useProgram(program);
-	alert("pre setTransform")
 	setTransformMatrix(gAlign, gLocX, gLocY, program);
-	alert("post setTransform");
 
 	// Load positions into the GPU and associate shader variables
 
@@ -120,10 +118,8 @@ function setTransformMatrix(pAlign, pLocX, pLocY, pProgram)
 								0.0                  , 0.0                        , 1.0,     0.0,
 								0.0                  , 0.0                        , 0.0,    1.0];
 
-  alert("matrix create");
+
 	var matrixLoc =  gl.getUniformLocation(pProgram, "transformMatrix");
-	alert("loc set");
 	gl.uniformMatrix4fv(matrixLoc, false, transformMatrix );
-	alert("uniform set");
 	//Übergibt die Transformationsmatrix an den Vertex-Shader.
 }
