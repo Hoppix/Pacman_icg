@@ -1,0 +1,11 @@
+body
+{
+  text-align: center;
+  background: #F78E16;
+}
+
+#page-wrap
+{
+     width: 800px;
+     margin: 0 auto;
+}
