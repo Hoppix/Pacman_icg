@@ -54,8 +54,9 @@ window.onload = function init()
 	gl.vertexAttribPointer(vColor, 4, gl.FLOAT, false, 0, 0);
 	gl.enableVertexAttribArray(vColor);
 
-
-	render(gobaHelpMe[2]); //auf Index 2 von HelpMe steht die
+requestAnimFrame(render(gobaHelpMe[2]));
+//render(gobaHelpMe[2]);
+//auf Index 2 von HelpMe steht NumberofVertices+2 -aussparung
 
 };
 
@@ -112,7 +113,6 @@ function drawPacman(radius, pintNumberOfVertices, pintMouthAngle)
 
 function setTransformMatrix(pAlign, pLocX, pLocY, pProgram)
 {
-	alert(pAlign);
 	var transformMatrix = [Math.cos(pAlign), -(Math.sin(pAlign)), 0.0, pLocX,
 				                Math.sin(pAlign), Math.cos(pAlign)    , 0.0, pLocY,
 								0.0                  , 0.0                        , 1.0,     0.0,
