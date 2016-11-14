@@ -150,8 +150,7 @@ function eventHandling(e)
 					turnRight();
 					break;
 		default:
-					alert(gAlign);
-					//alert(setTransformMatrix())
+					//alert(gAlign);
 					break;
 	}
 }
@@ -168,14 +167,16 @@ function turnRight()
 
 function moveFoward()
 {
+	var isInLineX = (gLocX + 0.1 * Math.cos(gAlign) < 1) && (gLocX + 0.1 * Math.cos(gAlign) > -1);
+	var isInLineY = (gLocY + 0.1 * Math.sin(gAlign) < 1) && (gLocY + 0.1 * Math.sin(gAlign) > -1);
 	//Pacman darf den canvas nicht verlassen.
-	If (!(gLocX + 0.2 * Math.sin(gAlign) > 1 || gLocX + 0.2 * Math.sin(gAlign) < -1))
+	if(isInLineX)
 	{
-			gLocX = gLocX + 0.2 * Math.sin(gAlign);
+			gLocX = gLocX + 0.1 * Math.cos(gAlign);
 	}
 
-	If (!(gLocY + 0.2 * Math.cos(gAlign) > 1 || gLocY + 0.2 * Math.cos(gAlign) < -1))
+	if (isInLineY)
 	{
-			gLocY = gLocY + 0.2 * Math.cos(gAlign);
+			gLocY = gLocY + 0.1 * Math.sin(gAlign);
 	}
 }
