@@ -169,6 +169,14 @@ function turnRight()
 
 function moveFoward()
 {
-	gLocX = gLocX;
-	gLocY = gLocY;
+	//Pacman darf den canvas nicht verlassen.
+	If (!(gLocX + 0.2 * Math.sin(gAlign) > 1 || gLocX + 0.2 * Math.sin(gAlign) < -1))
+	{
+			gLocX = gLocX + 0.2 * Math.sin(gAlign);
+	}
+	
+	If (!(gLocY + 0.2 * Math.cos(gAlign) > 1 || gLocY + 0.2 * Math.cos(gAlign) < -1))
+	{
+			gLocY = gLocY + 0.2 * Math.cos(gAlign);
+	}
 }
