@@ -3,6 +3,8 @@ var gl;
 var gLocX = 0.0;
 var gLocY = 0.0;
 var gAlign = degreesToRadians(0.0);
+var moveSpeed = 0.1;
+var rotationSpeed = 1;
 //Anzahl der Polygone definieren
 var gintNumberOfVertices = 80;
 // Specify position and color of the vertices
@@ -167,26 +169,26 @@ function eventHandling(e)
 
 function turnLeft()
 {
-	gAlign = gAlign + degreesToRadians(1.0);
+	gAlign = gAlign + degreesToRadians(rotationSpeed);
 }
 
 function turnRight()
 {
-	gAlign = gAlign - degreesToRadians(1.0);
+	gAlign = gAlign - degreesToRadians(rotationSpeed);
 }
 
 function moveFoward()
 {
-	var isInLineX = (gLocX + 0.1 * Math.cos(gAlign) < 1) && (gLocX + 0.1 * Math.cos(gAlign) > -1);
-	var isInLineY = (gLocY + 0.1 * Math.sin(gAlign) < 1) && (gLocY + 0.1 * Math.sin(gAlign) > -1);
+	var isInLineX = (gLocX + moveSpeed * Math.cos(gAlign) < 1) && (gLocX + moveSpeed * Math.cos(gAlign) > -1);
+	var isInLineY = (gLocY + moveSpeed * Math.sin(gAlign) < 1) && (gLocY + moveSpeed * Math.sin(gAlign) > -1);
 	//Pacman darf den canvas nicht verlassen.
 	if(isInLineX)
 	{
-			gLocX = gLocX + 0.1 * Math.cos(gAlign);
+			gLocX = gLocX + moveSpeed * Math.cos(gAlign);
 	}
 
 	if (isInLineY)
 	{
-			gLocY = gLocY + 0.1 * Math.sin(gAlign);
+			gLocY = gLocY + moveSpeed * Math.sin(gAlign);
 	}
 }
