@@ -1,9 +1,9 @@
 var gl;
 
+
 window.onload = function init()
 {
 	// Get canvas and setup WebGL
-
 	var canvas = document.getElementById("gl-canvas");
 	gl = WebGLUtils.setupWebGL(canvas);
 	if (!gl) { alert("WebGL isn't available"); }
@@ -16,47 +16,28 @@ window.onload = function init()
 	//Variablen für Position und Orientierung(Aufgabe 2) in Rad.
 	var gLocX = 0.0;
 	var gLocY = 0.0;
-	var gAlign = 0.0;
+	var gAlign = degreesToRadians(0.0);
+
+	window.addEventListener("keypress", eventHandling);
 
 	gobaHelpMe = drawPacman(3, gintNumberOfVertices, 45);
 	gf32aVertices = gobaHelpMe[0];
 	gf32aColors = gobaHelpMe[1];
 
-
 	// Configure viewport
-
 	gl.viewport(0,0,canvas.width,canvas.height);
-	gl.clearColor(0.0,0.0,0.0,0.0);
+	gl.clearColor(0.0,0.0,0.0,1.0);
 
 	// Init shader program and bind it
-
 	var program = initShaders(gl, "vertex-shader", "fragment-shader");
 	gl.useProgram(program);
 	setTransformMatrix(gAlign, gLocX, gLocY, program);
 
 	// Load positions into the GPU and associate shader variables
-
-	var posVBO = gl.createBuffer();
-	gl.bindBuffer(gl.ARRAY_BUFFER, posVBO);
-	gl.bufferData(gl.ARRAY_BUFFER, gf32aVertices, gl.STATIC_DRAW);
-
-	var vPosition = gl.getAttribLocation(program, "vPosition");
-	gl.vertexAttribPointer(vPosition, 2, gl.FLOAT, false, 0, 0);
-	gl.enableVertexAttribArray(vPosition);
-
-	// Load colors into the GPU and associate shader variables
-
-	var colorVBO = gl.createBuffer();
-	gl.bindBuffer(gl.ARRAY_BUFFER, colorVBO);
-	gl.bufferData(gl.ARRAY_BUFFER, gf32aColors, gl.STATIC_DRAW);
-
-	var vColor = gl.getAttribLocation(program, "vColor");
-	gl.vertexAttribPointer(vColor, 4, gl.FLOAT, false, 0, 0);
-	gl.enableVertexAttribArray(vColor);
-
-requestAnimFrame(render(gobaHelpMe[2]));
-//render(gobaHelpMe[2]);
-//auf Index 2 von HelpMe steht NumberofVertices+2 -aussparung
+	//VBO
+	setVBO(gf32aVertices, gf32aColors, program);
+  requestAnimFrame(render(gobaHelpMe[2]));
+  //auf Index 2 von HelpMe steht NumberofVertices+2 -aussparung
 
 };
 
@@ -122,4 +103,56 @@ function setTransformMatrix(pAlign, pLocX, pLocY, pProgram)
 	var matrixLoc =  gl.getUniformLocation(pProgram, "transformMatrix");
 	gl.uniformMatrix4fv(matrixLoc, false, transformMatrix );
 	//Übergibt die Transformationsmatrix an den Vertex-Shader.
+}
+
+function degreesToRadians(x)
+{
+	return x * (Math.PI / 180);
+}
+
+function setVBO(pf32aVertices, pf32aColors, pProgram)
+{
+	var posVBO = gl.createBuffer();
+	gl.bindBuffer(gl.ARRAY_BUFFER, posVBO);
+	gl.bufferData(gl.ARRAY_BUFFER, pf32aVertices, gl.STATIC_DRAW);
+
+	var vPosition = gl.getAttribLocation(pProgram, "vPosition");
+	gl.vertexAttribPointer(vPosition, 2, gl.FLOAT, false, 0, 0);
+	gl.enableVertexAttribArray(vPosition);
+
+	// Load colors into the GPU and associate shader variables
+
+	var colorVBO = gl.createBuffer();
+	gl.bindBuffer(gl.ARRAY_BUFFER, colorVBO);
+	gl.bufferData(gl.ARRAY_BUFFER, pf32aColors, gl.STATIC_DRAW);
+
+	var vColor = gl.getAttribLocation(pProgram, "vColor");
+	gl.vertexAttribPointer(vColor, 4, gl.FLOAT, false, 0, 0);
+	gl.enableVertexAttribArray(vColor);
+}
+
+function eventHandling(e)
+{
+	//TODO functionen implementieren.
+	switch(e.keyCode)
+	{
+		case 38:
+					//foward
+					//move();
+					alert("foward");
+					break;
+		case 37:
+					alert("left");
+					//Turn left
+					//turnLeft();
+					break;
+		case 39:
+					alert("right");
+					//Turn right
+					//turnRight();
+					break;
+		default:
+					alert("Unzulässige Taste!");
+					break;
+	}
 }
