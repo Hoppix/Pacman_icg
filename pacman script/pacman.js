@@ -4,7 +4,7 @@ var gLocX = 0.0;
 var gLocY = 0.0;
 var gAlign = degreeToRadian(0.0);
 var gMoveSpeed = 0.1;
-var gRotationSpeed = 1;
+var gRotationSpeed = 90;
 //Anzahl der Polygone definieren
 var gintNumberOfVertices = 80;
 // Specify position and color of the vertices
