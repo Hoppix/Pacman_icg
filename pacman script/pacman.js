@@ -2,9 +2,9 @@ var gl;
 //Variablen für Position und Orientierung.
 var gLocX = 0.0;
 var gLocY = 0.0;
-var gAlign = degreesToRadians(0.0);
-var moveSpeed = 0.1;
-var rotationSpeed = 1;
+var gAlign = degreeToRadian(0.0);
+var gMoveSpeed = 0.1;
+var gRotationSpeed = 1;
 //Anzahl der Polygone definieren
 var gintNumberOfVertices = 80;
 // Specify position and color of the vertices
@@ -117,7 +117,7 @@ function setTransformMatrix()
 	//Übergibt die Transformationsmatrix an den Vertex-Shader.
 }
 
-function degreesToRadians(x)
+function degreeToRadian(x)
 {
 	//Einfache Hilfsfunktion zum Konvertieren von Grad zu Bogenmaß.
 	return x * (Math.PI / 180);
@@ -169,12 +169,12 @@ function eventHandling(e)
 
 function turnLeft()
 {
-	gAlign = gAlign + degreesToRadians(rotationSpeed);
+	gAlign = gAlign + degreeToRadian(rotationSpeed);
 }
 
 function turnRight()
 {
-	gAlign = gAlign - degreesToRadians(rotationSpeed);
+	gAlign = gAlign - degreeToRadian(rotationSpeed);
 }
 
 function moveFoward()
