@@ -169,26 +169,26 @@ function eventHandling(e)
 
 function turnLeft()
 {
-	gAlign = gAlign + degreeToRadian(rotationSpeed);
+	gAlign = gAlign + degreeToRadian(gRotationSpeed);
 }
 
 function turnRight()
 {
-	gAlign = gAlign - degreeToRadian(rotationSpeed);
+	gAlign = gAlign - degreeToRadian(gRotationSpeed);
 }
 
 function moveFoward()
 {
-	var isInLineX = (gLocX + moveSpeed * Math.cos(gAlign) < 1) && (gLocX + moveSpeed * Math.cos(gAlign) > -1);
-	var isInLineY = (gLocY + moveSpeed * Math.sin(gAlign) < 1) && (gLocY + moveSpeed * Math.sin(gAlign) > -1);
+	var isInLineX = (gLocX + gMoveSpeed * Math.cos(gAlign) < 1) && (gLocX + gMoveSpeed * Math.cos(gAlign) > -1);
+	var isInLineY = (gLocY + gMoveSpeed * Math.sin(gAlign) < 1) && (gLocY + gMoveSpeed * Math.sin(gAlign) > -1);
 	//Pacman darf den canvas nicht verlassen.
 	if(isInLineX)
 	{
-			gLocX = gLocX + moveSpeed * Math.cos(gAlign);
+			gLocX = gLocX + gMoveSpeed * Math.cos(gAlign);
 	}
 
 	if (isInLineY)
 	{
-			gLocY = gLocY + moveSpeed * Math.sin(gAlign);
+			gLocY = gLocY + gMoveSpeed * Math.sin(gAlign);
 	}
 }
